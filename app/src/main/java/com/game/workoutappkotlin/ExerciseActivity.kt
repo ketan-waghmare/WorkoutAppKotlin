@@ -1,5 +1,7 @@
 package com.game.workoutappkotlin
 
+import android.media.MediaPlayer
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -8,6 +10,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.game.workoutappkotlin.databinding.ActivityExerciseBinding
+import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -24,6 +27,8 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private var currentExercisePosition = -1
 
     private var tts : TextToSpeech? = null
+
+    private var player: MediaPlayer? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,6 +54,16 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     }
 
     private fun setupRestView() {
+
+        try {
+            val soundURI = Uri.parse(
+                "android.resource://com.game.workoutappkotlin/" + R.raw.press_start)
+            player = MediaPlayer.create(applicationContext,soundURI)
+            player?.isLooping = false
+            player?.start()
+        }catch (e : Exception) {
+            e.printStackTrace()
+        }
 
         binding?.flRestView?.visibility = View.VISIBLE
         binding?.tvTitle?.visibility = View.VISIBLE
@@ -163,6 +178,10 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
         if(tts != null) {
             tts!!.stop()
+        }
+
+        if(player != null) {
+            player?.stop()
         }
 
         binding = null
