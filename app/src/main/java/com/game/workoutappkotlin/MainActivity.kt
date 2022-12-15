@@ -1,8 +1,10 @@
 package com.game.workoutappkotlin
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import com.game.workoutappkotlin.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -17,8 +19,15 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this,
                     "Here will start the exercise",
             Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this,ExerciseActivity::class.java))
         }
 
+        disableDarkTheme()
+
+    }
+
+    private fun disableDarkTheme() {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
     }
 
 
