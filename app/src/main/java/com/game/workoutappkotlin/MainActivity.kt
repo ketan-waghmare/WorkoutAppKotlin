@@ -24,6 +24,10 @@ class MainActivity : AppCompatActivity() {
 
         disableDarkTheme()
 
+        binding?.flBMI?.setOnClickListener{
+            startActivity(Intent(this,BMIActivity::class.java))
+        }
+
     }
 
     private fun disableDarkTheme() {
